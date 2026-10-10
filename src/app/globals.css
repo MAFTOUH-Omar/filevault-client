@@ -1,0 +1,260 @@
+@import 'tailwindcss';
+
+@import 'tw-animate-css';
+
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+    /* Hauteur de la navbar sticky : h-16 + 1 px de bordure. */
+    --spacing-navbar: calc(4rem + 1px);
+
+    --animate-float: float 6s ease-in-out infinite;
+    --animate-float-shadow: float-shadow 6s ease-in-out infinite;
+
+    @keyframes float {
+        0%,
+        100% {
+            transform: translateY(0) rotate(-1deg);
+        }
+        50% {
+            transform: translateY(-12px) rotate(1deg);
+        }
+    }
+
+    @keyframes float-shadow {
+        0%,
+        100% {
+            transform: scaleX(1);
+            opacity: 0.9;
+        }
+        50% {
+            transform: scaleX(0.8);
+            opacity: 0.55;
+        }
+    }
+}
+
+@theme {
+    --font-sans:
+        var(--font-ubuntu), 'Ubuntu', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-display: var(--font-gluten), 'Gluten', ui-sans-serif, system-ui, sans-serif;
+
+    /* Marque FileVault : l'accent lime et les surfaces noires restent fixes. */
+    --color-lime: #d4ff3f;
+    --color-lime-deep: #b6e01f;
+    --color-lime-soft: var(--lime-soft);
+    --color-night: #121212;
+    --color-night-soft: #2a2a2a;
+
+    --shadow-soft:
+        0 1px 2px rgb(0 0 0 / 0.04), 0 8px 24px -8px rgb(0 0 0 / 0.08);
+    --shadow-lift: 0 30px 60px -20px rgb(0 0 0 / 0.35);
+
+    --radius-lg: var(--radius);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-sm: calc(var(--radius) - 4px);
+
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-muted: var(--sidebar-muted);
+}
+
+:root {
+    --background: #fafaf7;
+    --foreground: #121212;
+    --card: #ffffff;
+    --card-foreground: #121212;
+    --popover: #ffffff;
+    --popover-foreground: #121212;
+    --primary: #121212;
+    --primary-foreground: #fafaf7;
+    --secondary: #f1f1ec;
+    --secondary-foreground: #121212;
+    --muted: #f1f1ec;
+    --muted-foreground: #6b6b65;
+    --accent: #f1f1ec;
+    --accent-foreground: #121212;
+    --destructive: oklch(0.577 0.245 27.325);
+    --destructive-foreground: oklch(0.577 0.245 27.325);
+    --border: #e7e7e1;
+    --input: #e7e7e1;
+    --ring: #b6e01f;
+    --lime-soft: #f2ffc9;
+    --chart-1: oklch(0.646 0.222 41.116);
+    --chart-2: oklch(0.6 0.118 184.704);
+    --chart-3: oklch(0.398 0.07 227.392);
+    --chart-4: oklch(0.828 0.189 84.429);
+    --chart-5: oklch(0.769 0.188 70.08);
+    --radius: 0.625rem;
+
+    /*
+     * Sidebar à contre-courant du thème : sombre quand l'interface est claire…
+     * (item actif = pastille lime, texte noir)
+     */
+    --sidebar: #121212;
+    --sidebar-foreground: #f1f1ea;
+    --sidebar-muted: #8e8e86;
+    --sidebar-primary: #d4ff3f;
+    --sidebar-primary-foreground: #121212;
+    --sidebar-accent: #242422;
+    --sidebar-accent-foreground: #ffffff;
+    --sidebar-border: #2c2c28;
+    --sidebar-ring: #d4ff3f;
+}
+
+.dark {
+    --background: #0f0f0d;
+    --foreground: #f5f5ef;
+    --card: #171715;
+    --card-foreground: #f5f5ef;
+    --popover: #171715;
+    --popover-foreground: #f5f5ef;
+    --primary: #f5f5ef;
+    --primary-foreground: #121212;
+    --secondary: #22221f;
+    --secondary-foreground: #f5f5ef;
+    --muted: #22221f;
+    --muted-foreground: #a3a39b;
+    --accent: #22221f;
+    --accent-foreground: #f5f5ef;
+    --destructive: oklch(0.396 0.141 25.723);
+    --destructive-foreground: oklch(0.637 0.237 25.331);
+    --border: #2a2a26;
+    --input: #2a2a26;
+    --ring: #d4ff3f;
+    --lime-soft: #232b0c;
+    --chart-1: oklch(0.488 0.243 264.376);
+    --chart-2: oklch(0.696 0.17 162.48);
+    --chart-3: oklch(0.769 0.188 70.08);
+    --chart-4: oklch(0.627 0.265 303.9);
+    --chart-5: oklch(0.645 0.246 16.439);
+
+    /* … et vert lime pâle quand l'interface est sombre (item actif = pastille noire, texte lime). */
+    --sidebar: #e4f8a2;
+    --sidebar-foreground: #121212;
+    --sidebar-muted: #55602a;
+    --sidebar-primary: #121212;
+    --sidebar-primary-foreground: #d4ff3f;
+    --sidebar-accent: #d3ec84;
+    --sidebar-accent-foreground: #121212;
+    --sidebar-border: #c5df74;
+    --sidebar-ring: #121212;
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+    }
+
+    ::selection {
+        background: var(--color-lime);
+        color: var(--color-night);
+    }
+}
+
+@layer components {
+    /*
+     * Les composants partagés (StorageMeter, Progress…) lisent les tokens du thème ; dans la sidebar,
+     * dont la couleur est inversée, on les redirige vers les tokens `--sidebar-*`.
+     */
+    .sidebar-scope {
+        --color-foreground: var(--sidebar-foreground);
+        --color-muted-foreground: var(--sidebar-muted);
+        --color-border: var(--sidebar-border);
+        --color-secondary: var(--sidebar-accent);
+        --color-lime-deep: var(--sidebar-primary);
+    }
+
+    /* Fond pointillé discret, qui suit le thème. */
+    .bg-dots {
+        background-image: radial-gradient(
+            color-mix(in oklab, var(--foreground) 14%, transparent) 1px,
+            transparent 1px
+        );
+        background-size: 18px 18px;
+    }
+
+    /* Surligneur lime derrière un mot du titre. */
+    .mark-lime {
+        background: linear-gradient(
+            transparent 58%,
+            var(--color-lime) 58%,
+            var(--color-lime) 92%,
+            transparent 92%
+        );
+        padding: 0 0.08em;
+    }
+
+    .dark .mark-lime {
+        background: linear-gradient(
+            transparent 58%,
+            color-mix(in oklab, var(--color-lime) 38%, transparent) 58%,
+            color-mix(in oklab, var(--color-lime) 38%, transparent) 92%,
+            transparent 92%
+        );
+    }
+}
+
+/*
+ * Bascule clair/sombre façon Telegram : le nouveau thème se révèle en cercle
+ * depuis le bouton (animation pilotée par useAppearance).
+ */
+html[data-theme-transition]::view-transition-old(root),
+html[data-theme-transition]::view-transition-new(root) {
+    animation: none;
+    mix-blend-mode: normal;
+}
+
+html[data-theme-transition]::view-transition-new(root) {
+    z-index: 2;
+}
