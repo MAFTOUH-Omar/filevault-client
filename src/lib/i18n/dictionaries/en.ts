@@ -140,6 +140,9 @@ export const en: Translation = {
         label: 'Storage',
         unlimited: 'unlimited',
         usedAria: 'Storage space used',
+        remaining: '{size} left',
+        full: 'Storage full',
+        percentUsed: '{percent}% used',
     },
     files: {
         title: 'My files',

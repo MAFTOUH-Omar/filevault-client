@@ -9,8 +9,8 @@ import { Button } from '@/components/ui/button';
 import { useI18n } from '@/lib/i18n/use-i18n';
 import { UserMenu } from './user-menu';
 
-/** Barre du haut façon Reddit : menu + logo à gauche, actions et compte à droite. */
-export function AppHeader({ onToggleMenu }: { onToggleMenu: () => void }) {
+/** Barre du haut façon Reddit : logo à gauche (menu seulement sur mobile), actions et compte à droite. */
+export function AppHeader({ onOpenMobileMenu }: { onOpenMobileMenu: () => void }) {
     const { t } = useI18n();
 
     return (
@@ -20,7 +20,8 @@ export function AppHeader({ onToggleMenu }: { onToggleMenu: () => void }) {
                 variant="ghost"
                 size="icon"
                 aria-label={t('nav.toggleMenu')}
-                onClick={onToggleMenu}
+                onClick={onOpenMobileMenu}
+                className="lg:hidden"
             >
                 <Menu className="size-5" />
             </Button>

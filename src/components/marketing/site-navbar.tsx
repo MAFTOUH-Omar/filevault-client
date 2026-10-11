@@ -35,14 +35,9 @@ export function SiteNavbar() {
                             <Link href="/files">{t('marketing.myVault')}</Link>
                         </Button>
                     ) : (
-                        <>
-                            <Button asChild variant="ghost" size="sm">
-                                <Link href="/login">{t('marketing.login')}</Link>
-                            </Button>
-                            <Button asChild variant="lime" size="sm">
-                                <Link href="/register">{t('marketing.start')}</Link>
-                            </Button>
-                        </>
+                        <Button asChild variant="lime" size="sm">
+                            <Link href="/register">{t('marketing.start')}</Link>
+                        </Button>
                     )}
                 </div>
             </nav>

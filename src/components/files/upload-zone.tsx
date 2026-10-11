@@ -3,6 +3,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 import { CircleAlert, CircleCheck, UploadCloud, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
+import GridPattern from '@/components/marketing/grid-pattern';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Spinner } from '@/components/ui/spinner';
@@ -83,22 +84,32 @@ export function UploadZone() {
                     }
                 }}
                 className={cn(
-                    'bg-dots flex flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed px-6 py-10 text-center transition-colors',
+                    'group relative flex flex-col items-center overflow-hidden justify-center gap-3 rounded-2xl border border-dashed px-6 py-14 text-center transition-[border-color,background-color,transform] duration-200',
                     isDragging
-                        ? 'border-lime-deep bg-lime-soft'
+                        ? 'scale-[1.01] border-lime-deep bg-lime-soft'
                         : 'border-border bg-card',
                 )}
             >
-                <div className="flex size-12 items-center justify-center rounded-full bg-lime text-night shadow-soft">
+                <GridPattern />
+                <div
+                    className={cn(
+                        'relative flex size-12 items-center justify-center rounded-full bg-lime text-night shadow-soft transition-transform duration-200',
+                        isDragging && '-translate-y-1 scale-110',
+                    )}
+                >
                     <UploadCloud className="size-6" />
                 </div>
-                <div className="space-y-1">
-                    <p className="font-medium">{t('files.dropTitle')}</p>
+                <div className="relative space-y-1">
+                    <p className="font-semibold">{t('files.dropTitle')}</p>
                     <p className="text-sm text-muted-foreground">
                         {t('files.dropText')}
                     </p>
                 </div>
-                <Button variant="lime" onClick={() => inputRef.current?.click()}>
+                <Button
+                    variant="lime"
+                    className="relative mt-1 rounded-lg px-5 font-semibold"
+                    onClick={() => inputRef.current?.click()}
+                >
                     {t('files.choose')}
                 </Button>
                 <input

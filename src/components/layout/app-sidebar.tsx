@@ -61,9 +61,9 @@ function NavSection({
                                     onClick={onNavigate}
                                     aria-current={active ? 'page' : undefined}
                                     className={cn(
-                                        'flex h-10 items-center gap-3 rounded-lg px-3 text-sm font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-sidebar-ring',
+                                        'relative flex h-10 items-center gap-3 rounded-lg px-3 text-sm font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-sidebar-ring',
                                         active
-                                            ? 'bg-sidebar-primary text-sidebar-primary-foreground'
+                                            ? 'bg-sidebar-primary text-sidebar-primary-foreground dark:before:absolute dark:before:inset-y-2 dark:before:-start-1.5 dark:before:w-1 dark:before:rounded-full dark:before:bg-sidebar-ring'
                                             : 'text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground',
                                     )}
                                 >

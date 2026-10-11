@@ -11,6 +11,8 @@
 
     --animate-float: float 6s ease-in-out infinite;
     --animate-float-shadow: float-shadow 6s ease-in-out infinite;
+    --animate-pop-in: pop-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+    --animate-drift: drift var(--drift-duration, 7s) ease-in-out infinite;
 
     @keyframes float {
         0%,
@@ -19,6 +21,28 @@
         }
         50% {
             transform: translateY(-12px) rotate(1deg);
+        }
+    }
+
+    @keyframes pop-in {
+        from {
+            opacity: 0;
+            transform: scale(0.6);
+        }
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    /* Lévitation douce, amplitude et rotation pilotées par variables CSS (voir HeroFloaters). */
+    @keyframes drift {
+        0%,
+        100% {
+            transform: translateY(0) rotate(calc(var(--drift-r, 4deg) * -0.5));
+        }
+        50% {
+            transform: translateY(var(--drift-y, -14px)) rotate(var(--drift-r, 4deg));
         }
     }
 
@@ -44,6 +68,9 @@
     /* Marque FileVault : l'accent lime et les surfaces noires restent fixes. */
     --color-lime: #d4ff3f;
     --color-lime-deep: #b6e01f;
+    /* Lime très sombre : sidebar en dark, bouton de repli de la sidebar dans les deux thèmes. */
+    --color-lime-dark: #2a3b0a;
+    --color-lime-dark-hover: #374d0e;
     --color-lime-soft: var(--lime-soft);
     --color-night: #121212;
     --color-night-soft: #2a2a2a;
@@ -130,18 +157,18 @@
     --radius: 0.625rem;
 
     /*
-     * Sidebar à contre-courant du thème : sombre quand l'interface est claire…
+     * Sidebar de la couleur de l'en-tête (la page) : claire quand l'interface est claire…
      * (item actif = pastille lime, texte noir)
      */
-    --sidebar: #121212;
-    --sidebar-foreground: #f1f1ea;
-    --sidebar-muted: #8e8e86;
+    --sidebar: var(--background);
+    --sidebar-foreground: #121212;
+    --sidebar-muted: #6b6b65;
     --sidebar-primary: #d4ff3f;
     --sidebar-primary-foreground: #121212;
-    --sidebar-accent: #242422;
-    --sidebar-accent-foreground: #ffffff;
-    --sidebar-border: #2c2c28;
-    --sidebar-ring: #d4ff3f;
+    --sidebar-accent: #f1f1ec;
+    --sidebar-accent-foreground: #121212;
+    --sidebar-border: var(--border);
+    --sidebar-ring: #b6e01f;
 }
 
 .dark {
@@ -171,16 +198,16 @@
     --chart-4: oklch(0.627 0.265 303.9);
     --chart-5: oklch(0.645 0.246 16.439);
 
-    /* … et vert lime pâle quand l'interface est sombre (item actif = pastille noire, texte lime). */
-    --sidebar: #e4f8a2;
-    --sidebar-foreground: #121212;
-    --sidebar-muted: #55602a;
-    --sidebar-primary: #121212;
+    /* … et vert lime très sombre quand l'interface l'est (item actif = pastille lime profond, texte lime). */
+    --sidebar: #121906;
+    --sidebar-foreground: #eef5d6;
+    --sidebar-muted: #8c9a63;
+    --sidebar-primary: #2a3b0a;
     --sidebar-primary-foreground: #d4ff3f;
-    --sidebar-accent: #d3ec84;
-    --sidebar-accent-foreground: #121212;
-    --sidebar-border: #c5df74;
-    --sidebar-ring: #121212;
+    --sidebar-accent: #1c2709;
+    --sidebar-accent-foreground: #f4ffd0;
+    --sidebar-border: #27350d;
+    --sidebar-ring: #d4ff3f;
 }
 
 @layer base {
@@ -212,7 +239,7 @@
         --color-muted-foreground: var(--sidebar-muted);
         --color-border: var(--sidebar-border);
         --color-secondary: var(--sidebar-accent);
-        --color-lime-deep: var(--sidebar-primary);
+        --color-lime-deep: var(--sidebar-ring);
     }
 
     /* Fond pointillé discret, qui suit le thème. */

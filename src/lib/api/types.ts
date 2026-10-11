@@ -5,11 +5,10 @@ export type UserSummary = {
     email: string;
     fullName: string;
     storageUsedBytes: number;
-    /**
-     * Le serveur n'expose pas encore le quota de l'utilisateur : tant que ce champ est absent,
-     * l'interface n'affiche que l'espace utilisé. `null` = illimité.
-     */
-    storageQuotaBytes?: number | null;
+    /** Quota accordé par les rôles du compte (le plus grand). `null` = illimité. */
+    storageQuotaBytes: number | null;
+    /** Ce qu'il reste du quota (`max(quota - utilisé, 0)`). `null` = illimité. */
+    storageRemainingBytes: number | null;
     roles: string[];
     permissions: string[];
 };

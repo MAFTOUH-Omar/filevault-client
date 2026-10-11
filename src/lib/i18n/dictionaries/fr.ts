@@ -144,6 +144,9 @@ export const fr = {
         label: 'Stockage',
         unlimited: 'illimité',
         usedAria: 'Espace de stockage utilisé',
+        remaining: '{size} restants',
+        full: 'Stockage plein',
+        percentUsed: '{percent} % utilisé',
     },
     files: {
         title: 'Mes fichiers',

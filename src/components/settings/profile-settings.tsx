@@ -7,7 +7,6 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 import InputError from '@/components/input-error';
 import PasswordInput from '@/components/password-input';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -21,7 +20,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Spinner } from '@/components/ui/spinner';
-import { useInitials } from '@/hooks/use-initials';
+import { UserAvatar } from '@/components/user-avatar';
 import { changeEmail } from '@/lib/api/endpoints';
 import { errorMessage } from '@/lib/api/errors';
 import { useAuth } from '@/lib/auth/auth-provider';
@@ -108,7 +107,6 @@ function EmailForm({ onDone }: { onDone: () => void }) {
 export function ProfileSettings() {
     const { user } = useAuth();
     const { t } = useI18n();
-    const getInitials = useInitials();
     const [emailOpen, setEmailOpen] = useState(false);
 
     if (!user) {
@@ -118,11 +116,7 @@ export function ProfileSettings() {
     return (
         <>
             <div className="flex items-center gap-4 pt-6">
-                <Avatar className="size-16 overflow-hidden rounded-full">
-                    <AvatarFallback className="bg-lime-soft text-lg font-bold text-night dark:text-foreground">
-                        {getInitials(user.fullName)}
-                    </AvatarFallback>
-                </Avatar>
+                <UserAvatar seed={user.id} size={64} />
                 <div className="min-w-0">
                     <p className="truncate font-display text-2xl font-extrabold tracking-tight">
                         {user.fullName}

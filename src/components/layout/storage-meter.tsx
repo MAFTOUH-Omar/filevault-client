@@ -7,21 +7,30 @@ import { useI18n } from '@/lib/i18n/use-i18n';
 import { cn } from '@/lib/utils';
 
 /**
- * Espace utilisé. Le quota n'est affiché que si le serveur l'expose
- * (`storageQuotaBytes` ; `null` = illimité) — sinon, juste le volume utilisé.
+ * Espace utilisé / autorisé par les rôles du compte (`storageQuotaBytes`, `null` = illimité),
+ * avec ce qu'il reste (`storageRemainingBytes`, calculé par le serveur).
  */
 export function StorageMeter({
     user,
     className,
 }: {
-    user: Pick<UserSummary, 'storageUsedBytes' | 'storageQuotaBytes'>;
+    user: Pick<
+        UserSummary,
+        'storageUsedBytes' | 'storageQuotaBytes' | 'storageRemainingBytes'
+    >;
     className?: string;
 }) {
     const { t, formatBytes } = useI18n();
-    const { storageUsedBytes, storageQuotaBytes } = user;
+    const { storageUsedBytes, storageQuotaBytes, storageRemainingBytes } = user;
     const hasQuota = typeof storageQuotaBytes === 'number';
+    const remainingBytes = hasQuota
+        ? (storageRemainingBytes ??
+          Math.max(storageQuotaBytes - storageUsedBytes, 0))
+        : null;
     const ratio = hasQuota
-        ? Math.min(100, (storageUsedBytes / storageQuotaBytes) * 100)
+        ? storageQuotaBytes > 0
+            ? Math.min(100, (storageUsedBytes / storageQuotaBytes) * 100)
+            : 100
         : 0;
 
     return (
@@ -38,15 +47,35 @@ export function StorageMeter({
                         ` · ${t('storage.unlimited')}`}
                 </span>
             </div>
-            {hasQuota && (
-                <Progress
-                    value={ratio}
-                    aria-label={t('storage.usedAria')}
-                    indicatorClassName={cn(
-                        'bg-lime-deep',
-                        ratio >= 90 && 'bg-destructive',
-                    )}
-                />
+            {hasQuota && remainingBytes !== null && (
+                <>
+                    <Progress
+                        value={ratio}
+                        aria-label={t('storage.usedAria')}
+                        indicatorClassName={cn(
+                            'bg-lime-deep',
+                            ratio >= 90 && 'bg-destructive',
+                        )}
+                    />
+                    <div className="flex items-center justify-between gap-2 text-xs text-muted-foreground tabular-nums">
+                        <span>
+                            {t('storage.percentUsed', {
+                                percent: Math.round(ratio),
+                            })}
+                        </span>
+                        <span
+                            className={cn(
+                                remainingBytes === 0 && 'text-destructive',
+                            )}
+                        >
+                            {remainingBytes === 0
+                                ? t('storage.full')
+                                : t('storage.remaining', {
+                                      size: formatBytes(remainingBytes),
+                                  })}
+                        </span>
+                    </div>
+                </>
             )}
         </div>
     );

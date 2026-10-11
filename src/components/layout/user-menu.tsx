@@ -2,7 +2,7 @@
 
 import { ChevronDown, LogOut, Settings } from 'lucide-react';
 import Link from 'next/link';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { UserAvatar } from '@/components/user-avatar';
 import { Button } from '@/components/ui/button';
 import {
     DropdownMenu,
@@ -13,7 +13,6 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useInitials } from '@/hooks/use-initials';
 import { useAuth } from '@/lib/auth/auth-provider';
 import { useI18n } from '@/lib/i18n/use-i18n';
 
@@ -21,19 +20,12 @@ import { useI18n } from '@/lib/i18n/use-i18n';
 export function UserMenu() {
     const { user, logout } = useAuth();
     const { t } = useI18n();
-    const getInitials = useInitials();
 
     if (!user) {
         return null;
     }
 
-    const avatar = (
-        <Avatar className="size-8 overflow-hidden rounded-full">
-            <AvatarFallback className="bg-lime-soft text-xs font-bold text-night dark:text-foreground">
-                {getInitials(user.fullName)}
-            </AvatarFallback>
-        </Avatar>
-    );
+    const avatar = <UserAvatar seed={user.id} size={32} />;
 
     return (
         <DropdownMenu>
