@@ -21,13 +21,45 @@ const gluten = Gluten({
     display: 'swap',
 });
 
+const SITE_NAME = 'FileVault';
+const SITE_TITLE = 'FileVault — Votre coffre-fort de fichiers';
+const SITE_DESCRIPTION =
+    'Stockez, retrouvez et partagez vos fichiers en toute sécurité. Envoi direct et chiffré, quota clair, accès contrôlé.';
+
+// Image de partage (réseaux sociaux, messageries) servie depuis /public.
+const OG_IMAGE = {
+    url: '/og-image.webp',
+    width: 1400,
+    height: 876,
+    type: 'image/webp',
+    alt: 'FileVault — aperçu de l’application',
+};
+
 export const metadata: Metadata = {
+    // Rend les URLs relatives (og:image…) absolues : à définir en prod via NEXT_PUBLIC_SITE_URL.
+    metadataBase: new URL(
+        process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000',
+    ),
+    applicationName: SITE_NAME,
     title: {
-        default: 'FileVault — Votre coffre-fort de fichiers',
+        default: SITE_TITLE,
         template: '%s · FileVault',
     },
-    description:
-        'Stockez, retrouvez et partagez vos fichiers en toute sécurité. Envoi direct et chiffré, quota clair, accès contrôlé.',
+    description: SITE_DESCRIPTION,
+    openGraph: {
+        type: 'website',
+        locale: 'fr_FR',
+        siteName: SITE_NAME,
+        title: SITE_TITLE,
+        description: SITE_DESCRIPTION,
+        images: [OG_IMAGE],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: SITE_TITLE,
+        description: SITE_DESCRIPTION,
+        images: [OG_IMAGE.url],
+    },
 };
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
